@@ -11,6 +11,7 @@
 	</head>
 
 	<body>
+		<div id="obniz-debug"></div>
 		<h1>サーボモータ</h1>
 		<ol>
 			<li>名前：<input id="name" type="text"></li>
@@ -22,7 +23,7 @@
 			const INFO = document.getElementById("info");
 			const NAME = document.getElementById("name");
 			const SLIDER = document.getElementById("slider");
-			const OBNIZ = new Obniz("61615678");
+			const OBNIZ = new Obniz("OBNIZ_ID_HERE");
 
 			OBNIZ.io1.pull("5v");
 
