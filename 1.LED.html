@@ -1,0 +1,54 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://unpkg.com/obniz@1.13.0/obniz.js" crossorigin="anonymous"></script>
+	<style>
+		* {font-size: 32px;}
+		#obniz-debug * {font-size: 16px;}
+	</style>
+</head>
+
+<body>
+
+	<div id="obniz-debug"></div>
+	<h1>Lチカ</h1>
+	<button id="on">ON</button>
+	<button id="off">OFF</button>
+	<div id="print"></div>
+
+	<script>
+		const OBNIZ = new Obniz("OBNIZ_ID_HERE");
+		const ON = document.getElementById("on");
+		const OFF = document.getElementById("off");
+		const PRINT = document.getElementById("print");
+
+		OBNIZ.onconnect = async function () {
+			const LED = OBNIZ.wired("LED", { anode: 0, cathode: 1 });
+			OBNIZ.display.clear();
+			OBNIZ.display.print("Hello World");
+		}
+
+		OBNIZ.switch.onchange = (state) => {
+			PRINT.innerHTML = state;
+			OBNIZ.display.clear();
+			OBNIZ.display.print(state);
+		}
+
+		ON.addEventListener("click", () => {
+			LED.on();
+			OBNIZ.display.clear();
+			OBNIZ.display.print("つける");
+		});
+
+		OFF.addEventListener("click", () => {
+			LED.off();
+			OBNIZ.display.clear();
+			OBNIZ.display.print("消す");
+		});
+
+	</script>
+</body>
+
+</html>

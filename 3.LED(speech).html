@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://unpkg.com/obniz@1.13.0/obniz.js" crossorigin="anonymous"></script>
+
+		<style>
+			*{font-size: 32px;}
+			#obniz-debug * {font-size: 16px;}
+		</style>
+	</head>
+
+	<body>
+		<div id="obniz-debug"></div>
+		<h1>Ｌチカ(音声バージョン)</h1>
+		<button id="speech">押して音声指示</button>
+		<div id="print"></div>
+
+		<script>
+
+			const SPEECH = document.getElementById("speech");
+			const PRINT = document.getElementById("print");
+			const OBNIZ = new Obniz("OBNIZ_ID_HERE");
+
+			OBNIZ.onconnect = async ()=>{
+				let led1 = OBNIZ.wired("LED", { anode: 0, cathode: 1 });
+				let led2 = OBNIZ.wired("LED", { anode: 2, cathode: 3 });
+
+				OBNIZ.display.clear();
+				OBNIZ.display.print("チカチカしよう！");
+			}
+
+			OBNIZ.switch.onchange = (state) => {
+				PRINT.innerHTML = state;
+				OBNIZ.display.clear();
+				OBNIZ.display.print(state);
+			}
+
+			function red() {
+				led1.on();
+				led2.off();
+				OBNIZ.display.clear();
+				OBNIZ.display.print("赤のLED！");
+			};
+
+			function blue() {
+				led1.off();
+				led2.on();
+				OBNIZ.display.clear();
+				OBNIZ.display.print("青のLED");
+			};
+
+			SPEECH.addEventListener("click", () => {
+				const RECOGNITION = new webkitSpeechRecognition();
+				RECOGNITION.lang = "ja-JP";
+				RECOGNITION.start();
+				RECOGNITION.addEventListener('result', (e) => {
+					let rec = e.results.item(0).item(0).transcript;
+					if (rec = "赤") { red(); }
+					if (rec = "青") { blue(); }
+				});
+			})
+
+
+		</script>
+	</body>
+</html>
