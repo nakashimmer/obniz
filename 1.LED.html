@@ -2,14 +2,14 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width">
 	<script src="https://unpkg.com/obniz@1.13.0/obniz.js" crossorigin="anonymous"></script>
+	<script src="ob.js"></script>
 	<style>
 		* {font-size: 32px;}
 		#obniz-debug * {font-size: 16px;}
 	</style>
 </head>
-
 <body>
 
 	<div id="obniz-debug"></div>
@@ -19,7 +19,7 @@
 	<div id="print"></div>
 
 	<script>
-		const OBNIZ = new Obniz("OBNIZ_ID_HERE");
+		const OBNIZ = new Obniz(obid);
 		const ON = document.getElementById("on");
 		const OFF = document.getElementById("off");
 		const PRINT = document.getElementById("print");

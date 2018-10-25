@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="https://unpkg.com/obniz@1.13.0/obniz.js" crossorigin="anonymous"></script>
-
+		<script src="ob.js"></script>
 		<style>
 			*{font-size: 32px;}
 			#obniz-debug * {font-size: 16px;}
@@ -21,7 +21,7 @@
 
 			const SPEECH = document.getElementById("speech");
 			const PRINT = document.getElementById("print");
-			const OBNIZ = new Obniz("OBNIZ_ID_HERE");
+			const OBNIZ = new Obniz(obid);
 
 			OBNIZ.onconnect = async ()=>{
 				let led1 = OBNIZ.wired("LED", { anode: 0, cathode: 1 });

@@ -12,6 +12,14 @@
 			<li><a href="2.servo.html">サーボモータ</a></li>
 			<li><a href="3.LED(speech).html">Lチカ(Speech)</a></li>
 		</ol>
-		<ol>
+		
+		<h2>input OBNIZ ID</h2>
+		<p><input type="text" id="obid"><button onclick="reg();">登録</button></p>
+		<script>
+			let OBID=document.getElementById("obid");
+			function reg(){
+				localStorage.setItem("OBID",OBID.value);
+			}
+		</script>
 	</body>
 </html>
