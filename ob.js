@@ -1,7 +1,7 @@
 let obid;
 
-if(localStorage.setItem("OBID")){
-	obid = localStorage.setItem("OBID");
+if(localStorage.getItem("OBID")){
+	obid = localStorage.getItem("OBID");
 }else{
 	obid = "OBNIZ_ID_HERE";
 }
