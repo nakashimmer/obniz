@@ -4,6 +4,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="https://unpkg.com/obniz@1.13.0/obniz.js"></script>
 		<script src="ob.js"></script>
+		<link rel="stylesheet" href="../iframe.css">
 		<style>
 			*{font-size:32px;}
 			#obniz-debug * {font-size: 16px;}
@@ -11,17 +12,15 @@
 	</head>
 
 	<body>
-		<div id="obniz-debug"></div>
-		<h1>サーボモータ</h1>
+		<!-- div id="obniz-debug"></div -->
+		<h1>③-2 サーボモータ</h1>
 		<ol>
-			<li>名前：<input id="name" type="text"></li>
 			<li>操作：<input id="slider" type="range"  min="0" max="180"></li>
 			<li id="info">回転角度</li>
 		</ol>
 
 		<script>
 			const INFO = document.getElementById("info");
-			const NAME = document.getElementById("name");
 			const SLIDER = document.getElementById("slider");
 			const OBNIZ = new Obniz(obid);
 
@@ -30,25 +29,44 @@
 			OBNIZ.onconnect = async ()=>{
 				OBNIZ.display.clear();
 				OBNIZ.display.print("サーボを動かそう！");
+			
+				const SERVO = OBNIZ.wired(
+					"ServoMotor",
+					{gnd:4, vcc:5, signal:6}
+				);
+
+				SLIDER.addEventListener(
+					"change",
+					()=>{
+						OBNIZ.io1.pull("5v");
+						SERVO.angle(SLIDER.value);
+						INFO.innerHTML = "回転角は"+SLIDER.value+"度";
+						OBNIZ.display.clear();
+						OBNIZ.display.print(SLIDER.value+"度回転");
+						OBNIZ.display.print("させました。");
+					}
+				);
 			}
+		</script>
 
-			const SERVO = obniz.wired(
-				"ServoMotor",
-				{gnd:4, vcc:5, signal:6}
-			);
+		<h2>HTML</h2>
+		<pre><code>操作：&lt;input id="slider" type="range" min="0" max="180"></code></pre>
 
-			SLIDER.addEventListener(
-				"change",
-				()=>{
-					OBNIZ.io1.pull("5v");
-					SERVO.angle(SLIDER.value);
-					INFO.innerHTML = "回転角は"+slider.value+"度";
-					OBNIZ.display.clear();
-					OBNIZ.display.print(name.value+"さんが");
-					OBNIZ.display.print(slider.value+"度回転");
-					OBNIZ.display.print("させました。");
-				}
-			);	
-	</script>
-  </body>
+		<h2>JavaScript</h2>
+		<pre><code>const SLIDER = document.getElementById("slider");
+const OBNIZ = new Obniz(obid);
+
+OBNIZ.onconnect = async ()=>{
+	const SERVO = OBNIZ.wired(
+		"ServoMotor",{gnd:4,vcc:5,signal:6}
+	);
+
+	SLIDER.addEventListener("change",()=>{
+		SERVO.angle(SLIDER.value);
+	});
+}</code></pre>
+
+<p><a href="3.LED(speech).html">次へ</a></p>
+
+	</body>
 </html>

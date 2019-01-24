@@ -14,8 +14,8 @@
 
 	<body>
 		<!-- div id="obniz-debug"></div -->
-		<h1>③-3 Ｌチカ(音声コントロール)</h1>
-		<p>赤色・緑色・終了</p>
+		<h1>③-4 サーボモータ(音声コントロール)</h1>
+		<p>左上げて・右上げて・終了</p>
 		<p id="print"></p>
 
 		<script>
@@ -25,28 +25,22 @@
 			const OBNIZ = new Obniz(obid);
 
 			OBNIZ.onconnect = async ()=>{
-				let led1 = OBNIZ.wired("LED", { anode: 0, cathode: 1 });
-				let led2 = OBNIZ.wired("LED", { anode: 2, cathode: 3 });
 
-				OBNIZ.display.clear();
-				OBNIZ.display.print("チカチカしよう！");
-				
+				const SERVO = OBNIZ.wired(
+					"ServoMotor",
+					{ gnd: 4, vcc: 5, signal: 6 }
+				);
 
-				OBNIZ.switch.onchange = (state) => {
-					PRINT.innerHTML = state;
-					OBNIZ.display.clear();
-					OBNIZ.display.print(state);
-				}
+				function left() { SERVO.angle(0);};
 
-				function red() {led1.on(); led2.off(); };
-
-				function blue() {led1.off(); led2.on(); };
+				function right() { SERVO.angle(180);};
 
 				const RECOGNITION = new webkitSpeechRecognition();
 				RECOGNITION.lang = "ja-JP";
 				RECOGNITION.continuous = true;
 				RECOGNITION.start();
 				PRINT.innerHTML="";
+
 				let result;
 				let i=0;
 				RECOGNITION.addEventListener('result', (e) => {
@@ -54,34 +48,22 @@
 					OBNIZ.display.clear();
 					OBNIZ.display.print(result);
 					PRINT.innerHTML+=result+"→";
-					if (result === "赤色") { red(); }
-					if (result === "緑色") { blue(); }
-					if (result === "終了") { 
-						RECOGNITION.stop(); 
-						led1.off();
-						led2.off();
-					}
+					if (result === "右上げて") { left(); }
+					if (result === "左上げて") { right(); }
+					if (result === "終了") { SERVO.angle(90); RECOGNITION.stop(); }
 					i++;
 				});
 			}
 
 		</script>
 		<h2>JavaScript</h2>
-		<pre><code>const RECOGNITION = new webkitSpeechRecognition();
-RECOGNITION.lang = "ja-JP";
-RECOGNITION.continuous = true;
-RECOGNITION.start();
-let result;
-let i=0;
-RECOGNITION.addEventListener('result', (e)=>{
+		<pre><code>RECOGNITION.addEventListener('result',(e)=>{
 	result = e.results.item(i).item(0).transcript;
-	if(result === "赤色"){red();}
-	if(result === "緑色"){blue();}
-	if(result === "終了"){
-		RECOGNITION.stop();led1.off();led2.off();
-	}
+	if(result === "右上げて"){ SERVO.angle(0); }
+	if(result === "左上げて"){ SERVO.angle(180); }
+	if(result === "終了"){ SERVO.angle(90); RECOGNITION.stop(); }
 	i++;
 });</code></pre>
-<p><a href="4.servo(speech).html">次へ</a></p>
+
 	</body>
 </html>
