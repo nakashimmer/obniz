@@ -55,8 +55,8 @@
 
 			<details>
 				<summary><h2>HTML</h2></summary>
-				<pre><code>&lt;button id="on">ON&lt;/button>
-&lt;button id="off">OFF&lt;/button></code></pre>
+				<pre><code>&lt;button id="<b>on</b>">ON&lt;/button>
+&lt;button id="<b>off</b>">OFF&lt;/button></code></pre>
 			</details>
 
 			<details>
@@ -68,8 +68,8 @@ const OBNIZ = new Obniz(obid);
 OBNIZ.onconnect = async ()=>{
 	const LED = OBNIZ.wired(
 		"LED",{anode:0,cathode:1});
-	ON.addEventListener("click", ()=>{LED.on();});
-	OFF.addEventListener("click", ()=>{LED.off();});
+	<b>ON</b>.addEventListener("<b>click</b>", ()=>{<b>LED.on()</b>;});
+	<b>OFF</b>.addEventListener("<b>click</b>", ()=>{<b>LED.off()</b>;});
 }</code></pre>
 			</details>
 			<p><a href="2.servo.html">次へ</a></p>

@@ -58,10 +58,10 @@
 				<summary><h2>JavaScript</h2></summary>
 				<pre><code>RECOGNITION.addEventListener('result',(e)=>{
 	result = e.results.item(i).item(0).transcript;
-	if(result === "右上げて"){ SERVO.angle(0); }
-	if(result === "左上げて"){ SERVO.angle(180); }
-	if(result === "終了"){
-		 SERVO.angle(90); RECOGNITION.stop(); 
+	if(result === "<b>右上げて</b>"){ <b>SERVO.angle(0)</b>; }
+	if(result === "<b>左上げて</b>"){ <b>SERVO.angle(180)</b>; }
+	if(result === "<b>終了</b>"){
+		 <b>SERVO.angle(90)</b>; RECOGNITION.stop(); 
 	}
 	i++;
 });</code></pre>

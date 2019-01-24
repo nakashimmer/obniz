@@ -74,10 +74,10 @@ let result;
 let i=0;
 RECOGNITION.addEventListener('result', (e)=>{
 	result = e.results.item(i).item(0).transcript;
-	if(result === "赤色"){red();}
-	if(result === "緑色"){blue();}
-	if(result === "終了"){
-		RECOGNITION.stop();led1.off();led2.off();
+	if(result === "<b>赤色</b>"){<b>red()</b>;}
+	if(result === "<b>緑色</b>"){<b>blue()</b>;}
+	if(result === "<b>終了</b>"){
+		RECOGNITION.stop();<b>led1.off()</b>;<b>led2.off()</b>;
 	}
 	i++;
 });</code></pre>

@@ -50,7 +50,7 @@
 
 			<details>
 				<summary><h2>HTML</h2></summary>
-				<pre><code>&lt;input id="slider" type="range" min="0" max="180"></code></pre>
+				<pre><code>&lt;input id="<b>slider</b>" type="range" min="0" max="180"></code></pre>
 			</details>
 			<details>
 				<summary><h2>JavaScript</h2></summary>
@@ -62,8 +62,8 @@ OBNIZ.onconnect = async ()=>{
 		"ServoMotor",{gnd:4,vcc:5,signal:6}
 	);
 
-	SLIDER.addEventListener("change",()=>{
-		SERVO.angle(SLIDER.value);
+		<b>SLIDER</b>.addEventListener("<b>change</b>",()=>{
+		<b>SERVO.angle(SLIDER.value)</b>;
 	});
 }</code></pre>
 			</details>
