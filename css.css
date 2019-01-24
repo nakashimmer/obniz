@@ -45,3 +45,8 @@ print{
 }
 
 ol,ul{list-style: none;}
+
+b{
+	color:#f22;
+	text-shadow:1px 1px 1px black;
+}
