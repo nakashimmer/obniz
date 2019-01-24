@@ -4,56 +4,57 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="https://unpkg.com/obniz@1.13.0/obniz.js"></script>
 		<script src="ob.js"></script>
-		<link rel="stylesheet" href="../iframe.css">
-		<style>
-			*{font-size:32px;}
-			#obniz-debug * {font-size: 16px;}
-		</style>
+		<link rel="stylesheet" href="css.css">
 	</head>
 
 	<body>
 		<!-- div id="obniz-debug"></div -->
-		<h1>③-2 サーボモータ</h1>
-		<ol>
-			<li>操作：<input id="slider" type="range"  min="0" max="180"></li>
-			<li id="info">回転角度</li>
-		</ol>
+		<div id="wrap">
+			<div class="btn">
+				<h1>#2 サーボモータ</h1>
+				<ol>
+					<li>操作：<input id="slider" type="range"  min="0" max="180"></li>
+					<li id="info">回転角度</li>
+				</ol>
+			</div>
+		
+			<script>
+				const INFO = document.getElementById("info");
+				const SLIDER = document.getElementById("slider");
+				const OBNIZ = new Obniz(obid);
 
-		<script>
-			const INFO = document.getElementById("info");
-			const SLIDER = document.getElementById("slider");
-			const OBNIZ = new Obniz(obid);
+				OBNIZ.io1.pull("5v");
 
-			OBNIZ.io1.pull("5v");
+				OBNIZ.onconnect = async ()=>{
+					OBNIZ.display.clear();
+					OBNIZ.display.print("サーボを動かそう！");
+				
+					const SERVO = OBNIZ.wired(
+						"ServoMotor",
+						{gnd:4, vcc:5, signal:6}
+					);
 
-			OBNIZ.onconnect = async ()=>{
-				OBNIZ.display.clear();
-				OBNIZ.display.print("サーボを動かそう！");
-			
-				const SERVO = OBNIZ.wired(
-					"ServoMotor",
-					{gnd:4, vcc:5, signal:6}
-				);
+					SLIDER.addEventListener(
+						"change",
+						()=>{
+							OBNIZ.io1.pull("5v");
+							SERVO.angle(SLIDER.value);
+							INFO.innerHTML = "回転角は"+SLIDER.value+"度";
+							OBNIZ.display.clear();
+							OBNIZ.display.print(SLIDER.value+"度回転");
+							OBNIZ.display.print("させました。");
+						}
+					);
+				}
+			</script>
 
-				SLIDER.addEventListener(
-					"change",
-					()=>{
-						OBNIZ.io1.pull("5v");
-						SERVO.angle(SLIDER.value);
-						INFO.innerHTML = "回転角は"+SLIDER.value+"度";
-						OBNIZ.display.clear();
-						OBNIZ.display.print(SLIDER.value+"度回転");
-						OBNIZ.display.print("させました。");
-					}
-				);
-			}
-		</script>
-
-		<h2>HTML</h2>
-		<pre><code>操作：&lt;input id="slider" type="range" min="0" max="180"></code></pre>
-
-		<h2>JavaScript</h2>
-		<pre><code>const SLIDER = document.getElementById("slider");
+			<details>
+				<summary><h2>HTML</h2></summary>
+				<pre><code>&lt;input id="slider" type="range" min="0" max="180"></code></pre>
+			</details>
+			<details>
+				<summary><h2>JavaScript</h2></summary>
+				<pre><code>const SLIDER = document.getElementById("slider");
 const OBNIZ = new Obniz(obid);
 
 OBNIZ.onconnect = async ()=>{
@@ -65,8 +66,9 @@ OBNIZ.onconnect = async ()=>{
 		SERVO.angle(SLIDER.value);
 	});
 }</code></pre>
+			</details>
 
-<p><a href="3.LED(speech).html">次へ</a></p>
-
+			<p><a href="3.LED(speech).html">次へ</a></p>
+		</div>
 	</body>
 </html>
